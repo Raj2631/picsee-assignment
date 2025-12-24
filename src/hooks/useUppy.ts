@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Uppy from "@uppy/core";
 import ThumbnailGenerator from "@uppy/thumbnail-generator";
+import XHRUpload from "@uppy/xhr-upload";
 import type { FileWithThumbnail } from "../types";
 
 const convertFile = (file: any): FileWithThumbnail => {
@@ -51,6 +52,14 @@ export function useUppy() {
       setFiles((prev) => prev.filter((f) => f.id !== file.id));
     });
 
+    uppy.use(XHRUpload, {
+      endpoint: `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUDINARY_NAME
+      }/image/upload`,
+      formData: true,
+      allowedMetaFields: ["upload_preset"],
+    });
+
     uppyRef.current = uppy;
 
     return () => {
@@ -74,10 +83,24 @@ export function useUppy() {
     uppyRef.current.removeFile(fileId);
   }, []);
 
+  const uploadFiles = useCallback(async () => {
+    if (!uppyRef.current) return;
+
+    const filesToUpload = uppyRef.current.getFiles();
+    filesToUpload.forEach((file) => {
+      uppyRef.current?.setFileMeta(file.id, {
+        upload_preset: import.meta.env.VITE_UPLOAD_PRESET_NAME,
+      });
+    });
+
+    await uppyRef.current.upload();
+  }, []);
+
   return {
     uppy: uppyRef.current,
     files,
     handleFilesAdded,
     removeFile,
+    uploadFiles,
   };
 }

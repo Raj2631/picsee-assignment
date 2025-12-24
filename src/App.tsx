@@ -1,11 +1,12 @@
 import "./App.css";
+import { ActionButtons } from "./components/ActionButtons";
 import { DropZone } from "./components/Dropzone";
 import { ImageCard } from "./components/ImageCard";
 import { MasonryGrid } from "./components/MasonryGrid";
 import { useUppy } from "./hooks/useUppy";
 
 function App() {
-  const { files, handleFilesAdded, removeFile } = useUppy();
+  const { files, handleFilesAdded, removeFile, uploadFiles } = useUppy();
 
   return (
     <>
@@ -38,13 +39,19 @@ function App() {
           </button>
 
           {files.length > 0 && (
-            <MasonryGrid>
-              {files.map((file) => (
-                <div key={file.id}>
-                  <ImageCard file={file} onRemove={removeFile} />
-                </div>
-              ))}
-            </MasonryGrid>
+            <>
+              <ActionButtons
+                hasFiles={files.length > 0}
+                onUpload={uploadFiles}
+              />
+              <MasonryGrid>
+                {files.map((file) => (
+                  <div key={file.id}>
+                    <ImageCard file={file} onRemove={removeFile} />
+                  </div>
+                ))}
+              </MasonryGrid>
+            </>
           )}
         </div>
       </div>
