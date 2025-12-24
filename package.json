@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@uppy/core": "^5.2.0",
+    "@uppy/thumbnail-generator": "^5.1.0",
     "install": "^0.13.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
