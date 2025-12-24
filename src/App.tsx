@@ -4,6 +4,8 @@ import { DropZone } from "./components/Dropzone";
 import Uppy from "@uppy/core";
 import ThumbnailGenerator from "@uppy/thumbnail-generator";
 import type { FileWithThumbnail } from "./types";
+import { ImageCard } from "./components/ImageCard";
+import { MasonryGrid } from "./components/MasonryGrid";
 
 function App() {
   const [files, setFiles] = useState<FileWithThumbnail[]>([]);
@@ -52,6 +54,11 @@ function App() {
     uppyRef.current = uppy;
   }, []);
 
+  const removeFile = (fileId: string) => {
+    if (!uppyRef.current) return;
+    uppyRef.current.removeFile(fileId);
+  };
+
   return (
     <>
       <div className="min-h-screen  bg-gray-50 dark:bg-gray-900 py-8 px-4">
@@ -62,7 +69,8 @@ function App() {
                 Image Uploader
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
-                Upload images to Cloudinary with a custom UI
+                Upload images to Cloudinary with a custom UI (No Uppy
+                components)
               </p>
             </header>
           </div>
@@ -80,6 +88,16 @@ function App() {
           >
             Log
           </button>
+
+          {files.length && (
+            <MasonryGrid>
+              {files.map((file) => (
+                <div key={file.id}>
+                  <ImageCard file={file} onRemove={removeFile} />
+                </div>
+              ))}
+            </MasonryGrid>
+          )}
         </div>
       </div>
     </>
