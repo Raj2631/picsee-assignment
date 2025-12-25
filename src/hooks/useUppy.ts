@@ -80,7 +80,13 @@ export function useUppy() {
     });
 
     uppy.on("file-removed", (file) => {
-      setFiles((prev) => prev.filter((f) => f.id !== file.id));
+      setFiles((prev) => {
+        const updatedFiles = prev.filter((f) => f.id !== file.id);
+        if (file.preview) {
+          URL.revokeObjectURL(file.preview);
+        }
+        return updatedFiles;
+      });
       updateProgressAndFiles();
     });
 
@@ -119,6 +125,10 @@ export function useUppy() {
             : f
         )
       );
+
+      if (file.preview) {
+        URL.revokeObjectURL(file.preview);
+      }
     });
 
     uppy.on("complete", () => {
@@ -230,6 +240,8 @@ export function useUppy() {
   const cancelUploads = () => {
     if (!uppyRef.current) return;
     uppyRef.current.cancelAll();
+    toast.success("Cancelled uploads");
+    setProgress(DEFAULT_PROGRESS);
   };
 
   const retryUploads = () => {
