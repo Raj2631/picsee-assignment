@@ -47,8 +47,8 @@ export function useUppy() {
     });
 
     uppy.use(ThumbnailGenerator, {
-      thumbnailWidth: 200,
-      thumbnailHeight: 200,
+      thumbnailWidth: 400,
+      thumbnailHeight: 400,
     });
     const updateProgressAndFiles = () => {
       if (!uppyRef.current) return;
@@ -216,6 +216,7 @@ export function useUppy() {
       ...prev,
       totalFiles: prev.totalFiles - completedFiles.length,
       completedFiles: 0,
+      uploadedBytes: 0,
     }));
     toast.success("Cleared uploaded images successfully");
   };

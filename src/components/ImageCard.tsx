@@ -1,3 +1,5 @@
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 import type { FileWithThumbnail } from "../types";
 
 interface ImageCardProps {
@@ -56,11 +58,14 @@ export function ImageCard({ file, onRemove }: ImageCardProps) {
   return (
     <div className="group relative bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
       <div className="relative bg-gray-700 overflow-hidden">
-        <img
+        <LazyLoadImage
           src={file.uploadURL || file.preview}
           alt={file.name}
           className="w-full h-full object-cover"
-          loading="lazy"
+          effect="opacity"
+          wrapperProps={{
+            style: { transitionDelay: "1s" },
+          }}
         />
       </div>
 
@@ -83,7 +88,7 @@ export function ImageCard({ file, onRemove }: ImageCardProps) {
         <div className="mt-2 flex gap-2">
           <button
             onClick={() => onRemove(file.id)}
-            className="flex-1 px-2 py-1 text-xs font-medium text-red-400 hover:bg-red-900/20 rounded transition-colors"
+            className="flex-1 px-2 py-1 text-xs font-medium text-red-400 hover:bg-red-900/20 rounded transition-colors cursor-pointer"
           >
             Remove
           </button>
