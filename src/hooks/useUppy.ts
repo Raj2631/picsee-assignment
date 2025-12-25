@@ -196,6 +196,11 @@ export function useUppy() {
     toast.success("Cleared uploaded images successfully");
   };
 
+  const cancelUploads = () => {
+    if (!uppyRef.current) return;
+    uppyRef.current.cancelAll();
+  };
+
   const retryUploads = () => {
     setFiles((prev) =>
       prev.map((f) => {
@@ -222,5 +227,6 @@ export function useUppy() {
     progress,
     clearCompleted,
     retryUploads,
+    cancelUploads,
   };
 }

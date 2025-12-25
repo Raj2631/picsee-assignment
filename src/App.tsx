@@ -16,6 +16,7 @@ function App() {
     isUploading,
     progress,
     clearCompleted,
+    cancelUploads,
     retryUploads,
   } = useUppy();
 
@@ -54,6 +55,8 @@ function App() {
                 onClearCompleted={clearCompleted}
                 hasErrors={hasErrors}
                 onRetryUploads={retryUploads}
+                isUploading={isUploading}
+                onCancelUploads={cancelUploads}
               />
 
               {files.length && (
