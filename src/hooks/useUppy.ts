@@ -88,10 +88,13 @@ export function useUppy() {
     uppy.on("upload", () => {
       setIsUploading(true);
       const allFiles = uppy.getFiles();
+      const completedFiles = allFiles.filter(
+        (f) => f.progress?.uploadComplete
+      ).length;
       setProgress((prev) => ({
         ...prev,
         totalFiles: allFiles.length,
-        completedFiles: 0,
+        completedFiles,
       }));
     });
 
@@ -162,8 +165,6 @@ export function useUppy() {
     files.forEach((file) => {
       uppyRef.current?.addFile(file);
     });
-
-    console.log("Uppy files:", uppyRef.current?.getFiles());
   };
 
   const removeFile = (fileId: string) => {
