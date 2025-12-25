@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
 
 interface DropZoneProps {
   onFilesAdded: (files: File[]) => void;
@@ -25,8 +26,11 @@ export function DropZone({ onFilesAdded, disabled = false }: DropZoneProps) {
         console.log("Accepted files:", acceptedFiles);
         console.log("Rejected files:", fileRejections);
 
-        if (!acceptedFiles.length) return;
+        if (fileRejections.length) {
+          toast.error(fileRejections[0].errors[0].message, {});
+        }
 
+        if (!acceptedFiles.length) return;
         onFilesAdded(acceptedFiles);
       },
     });
@@ -35,12 +39,12 @@ export function DropZone({ onFilesAdded, disabled = false }: DropZoneProps) {
     "relative border-2 border-dashed rounded-lg transition-all duration-200";
 
   const stateClasses = isDragActive
-    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 scale-[1.02]"
+    ? "border-blue-500 bg-blue-900/20 scale-[1.02]"
     : isDragReject
-    ? "border-red-400 bg-red-50 dark:bg-red-900/20"
+    ? "border-red-400 bg-red-900/20"
     : isHovering
-    ? "border-gray-400 bg-gray-50 dark:bg-gray-800/50"
-    : "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900/50";
+    ? "border-gray-400 bg-gray-800/50"
+    : "border-gray-600 bg-gray-900/50";
 
   const disabledClasses = disabled
     ? "opacity-50 cursor-not-allowed"
@@ -66,7 +70,7 @@ export function DropZone({ onFilesAdded, disabled = false }: DropZoneProps) {
       />
       <div className="p-12 text-center">
         <svg
-          className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500"
+          className="mx-auto h-12 w-12 text-gray-500"
           stroke="currentColor"
           fill="none"
           viewBox="0 0 48 48"
@@ -80,16 +84,16 @@ export function DropZone({ onFilesAdded, disabled = false }: DropZoneProps) {
           />
         </svg>
         <div className="mt-4">
-          <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
+          <p className="text-lg font-medium text-gray-100">
             {isDragActive ? "Drop images here" : "Drag and drop images here"}
           </p>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-400">
             or{" "}
-            <span className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500">
+            <span className="font-medium text-blue-400 hover:text-blue-500">
               click to browse
             </span>
           </p>
-          <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+          <p className="mt-1 text-xs text-gray-500">
             Supports JPG, PNG, GIF, WEBP (max 10MB per file)
           </p>
         </div>

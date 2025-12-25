@@ -4,4 +4,11 @@ export type FileWithThumbnail = {
   type?: string;
   size?: number;
   preview?: string;
+  progress?: any;
+  error?: string;
+};
+
+export type UploadProgress = {
+  totalFiles: number;
+  completedFiles: number;
 };
