@@ -8,6 +8,7 @@ import { useUppy } from "./hooks/useUppy";
 import { ProgressBar } from "./components/ProgressBar";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./components/ErrorFallback";
+import { Loader } from "./components/Loader";
 
 function App() {
   const {
@@ -20,6 +21,7 @@ function App() {
     clearCompleted,
     cancelUploads,
     retryUploads,
+    isGeneratingThumbnails,
   } = useUppy();
 
   const hasCompleted = files.some((f) => f.progress?.uploadComplete);
@@ -41,6 +43,13 @@ function App() {
             </header>
           </div>
           <DropZone onFilesAdded={handleFilesAdded} />
+
+          {isGeneratingThumbnails && (
+            <div className="my-4 flex justify-center align-center flex-col gap-2">
+              <Loader />
+              <p className="text-gray-500">Generating Thumbnails...</p>
+            </div>
+          )}
 
           {files.length === 0 && (
             <div className="mt-8 text-center text-gray-400">

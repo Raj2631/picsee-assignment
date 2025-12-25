@@ -28,8 +28,8 @@ export function useUppy() {
   const [files, setFiles] = useState<FileWithThumbnail[]>([]);
   const uppyRef = useRef<Uppy | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-
   const [progress, setProgress] = useState<UploadProgress>(DEFAULT_PROGRESS);
+  const [isGeneratingThumbnails, setIsGeneratingThumbnails] = useState(false);
 
   useEffect(() => {
     const uppy = new Uppy({
@@ -50,6 +50,7 @@ export function useUppy() {
       thumbnailWidth: 400,
       thumbnailHeight: 400,
     });
+
     const updateProgressAndFiles = () => {
       if (!uppyRef.current) return;
       const allFiles = uppyRef.current.getFiles();
@@ -63,6 +64,9 @@ export function useUppy() {
     };
 
     uppy.on("file-added", (file) => {
+      if (files.length === 0) {
+        setIsGeneratingThumbnails(true);
+      }
       setFiles((prev) => [...prev, convertFile(file)]);
       updateProgressAndFiles();
     });
@@ -71,6 +75,8 @@ export function useUppy() {
       setFiles((prev) =>
         prev.map((f) => (f.id === file.id ? { ...f, preview } : f))
       );
+
+      setIsGeneratingThumbnails(false);
     });
 
     uppy.on("file-removed", (file) => {
@@ -253,5 +259,6 @@ export function useUppy() {
     clearCompleted,
     retryUploads,
     cancelUploads,
+    isGeneratingThumbnails,
   };
 }
