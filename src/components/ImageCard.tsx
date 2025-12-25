@@ -57,7 +57,7 @@ export function ImageCard({ file, onRemove }: ImageCardProps) {
     <div className="group relative bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
       <div className="relative bg-gray-700 overflow-hidden">
         <img
-          src={file.preview}
+          src={file.uploadURL || file.preview}
           alt={file.name}
           className="w-full h-full object-cover"
           loading="lazy"

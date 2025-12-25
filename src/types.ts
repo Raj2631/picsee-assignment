@@ -5,7 +5,8 @@ export type FileWithThumbnail = {
   size?: number;
   preview?: string;
   progress?: any;
-  error?: string;
+  error?: string | null;
+  uploadURL?: string | undefined;
 };
 
 export type UploadProgress = {

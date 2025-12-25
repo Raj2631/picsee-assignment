@@ -13,6 +13,7 @@ const convertFile = (file: any): FileWithThumbnail => {
     size: file.size ?? undefined,
     preview: file.preview,
     progress: file.progress,
+    uploadURL: file.uploadURL,
   };
 };
 
@@ -96,6 +97,22 @@ export function useUppy() {
         totalFiles: allFiles.length,
         completedFiles,
       }));
+    });
+
+    uppy.on("upload-success", (file, response) => {
+      if (!file) return;
+
+      setFiles((prev) =>
+        prev.map((f) =>
+          f.id === file.id
+            ? {
+                ...f,
+                uploadURL: response.uploadURL,
+                error: null,
+              }
+            : f
+        )
+      );
     });
 
     uppy.on("complete", () => {
