@@ -6,6 +6,8 @@ import { ImageCard } from "./components/ImageCard";
 import { MasonryGrid } from "./components/MasonryGrid";
 import { useUppy } from "./hooks/useUppy";
 import { ProgressBar } from "./components/ProgressBar";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "./components/ErrorFallback";
 
 function App() {
   const {
@@ -23,7 +25,7 @@ function App() {
   const hasCompleted = files.some((f) => f.progress?.uploadComplete);
   const hasErrors = files.some((f) => f.error);
   return (
-    <>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <Toaster />
       <div className="min-h-screen bg-gray-900 py-8 px-4">
         <div className="max-w-3/4 mx-auto">
@@ -74,7 +76,7 @@ function App() {
           )}
         </div>
       </div>
-    </>
+    </ErrorBoundary>
   );
 }
 
