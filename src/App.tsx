@@ -9,6 +9,7 @@ import { ProgressBar } from "./components/ProgressBar";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./components/ErrorFallback";
 import { Loader } from "./components/Loader";
+import { MobileGalleryButton } from "./components/MobileGalleryButton";
 
 function App() {
   const {
@@ -42,6 +43,12 @@ function App() {
               </p>
             </header>
           </div>
+
+          <MobileGalleryButton
+            onFilesAdded={handleFilesAdded}
+            disabled={isUploading}
+          />
+
           <DropZone onFilesAdded={handleFilesAdded} />
 
           {isGeneratingThumbnails && (
@@ -53,7 +60,10 @@ function App() {
 
           {files.length === 0 && (
             <div className="mt-8 text-center text-gray-400">
-              <p>No files selected. Drag and drop images or click to browse.</p>
+              <p>
+                No files have been uploaded yet. Use the upload button to get
+                started.
+              </p>
             </div>
           )}
 
