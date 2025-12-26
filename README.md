@@ -1,6 +1,6 @@
-# PicSee Assignment
+# Uppy Uploader Assignment
 
-My submission for the PicSee image uploader assignment.
+My submission for the Uppy image uploader assignment.
 
 ## Overview
 
@@ -13,13 +13,13 @@ To set up and run the project, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/PicSee-assignment.git
+git clone git clone https://github.com/Raj2631/uppy-uploader.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd PicSee-assignment
+cd uppy-uploader
 ```
 
 3. Install the dependencies (use pnpm):
