@@ -59,14 +59,14 @@ The project is organized into the following main directories:
   - **components/**: Reusable React components.
   - **hooks/**: Custom React hooks for managing reusable logic.
 
-### 3. **TypeScript Integration**
+### 2. **TypeScript Integration**
 
 TypeScript is used throughout the project to ensure type safety and reduce runtime errors. All components, hooks, and services are strongly typed.
 
-### 4. **Styling**
+### 3. **Styling**
 
 The project uses [Tailwind CSS](https://tailwindcss.com/) for utility-first and responsive styling. Tailwind CSS allows for rapid UI development with a consistent design system.
 
-### 7. **Build and Deployment**
+### 4åß. **Build and Deployment**
 
 This project is build using [Vite](https://vite.dev/) and deployed to [Vercel](https://vercel.com/)
